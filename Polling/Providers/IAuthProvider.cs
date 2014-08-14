@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Polling.Providers
+namespace Polling.WebUI.Providers
 {
     public interface IAuthProvider
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Polling.Controllers
+namespace Polling.WebUI.Controllers
 {
     public class AdminController : Controller
     {

@@ -1,4 +1,4 @@
-﻿using Polling.Infrastructure;
+﻿using Polling.WebUI.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -10,7 +10,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 
-namespace Polling
+namespace Polling.WebUI
 {
     public class MvcApplication : System.Web.HttpApplication
     {
@@ -20,10 +20,8 @@ namespace Polling
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            // Use LocalDB for Entity Framework by default
-            Database.DefaultConnectionFactory = new SqlConnectionFactory(@"Data Source=(localdb)\v11.0; Integrated Security=True; MultipleActiveResultSets=True");
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             // ninject controller factory
             ControllerBuilder.Current.SetControllerFactory(new NinjectControllerFactory());

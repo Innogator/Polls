@@ -15,6 +15,7 @@ namespace Polling.Domain.Entities
             this.Options = new List<Option>();
             this.Comments = new List<Comment>();
             this.Votes = new List<Vote>();
+            this.Author = new User();
         }
 
         [HiddenInput(DisplayValue = false)]
@@ -32,8 +33,6 @@ namespace Polling.Domain.Entities
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MMM dd, yyyy}")]
         public System.DateTime PubDate { get; set; }
 
-        public int AuthorID { get; set; }
-
         [StringLength(200, ErrorMessage = "UrlSlug cannot exceed 200 characters")]
         public string UrlSlug { get; set; }
 
@@ -45,7 +44,7 @@ namespace Polling.Domain.Entities
         public virtual Category Category { get; set; }
         public virtual ICollection<Option> Options { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
-        public virtual User User { get; set; }
+        public virtual User Author { get; set; }
         public virtual ICollection<Vote> Votes { get; set; }
         public virtual ICollection<PollTag> PollTags { get; set; }
     }

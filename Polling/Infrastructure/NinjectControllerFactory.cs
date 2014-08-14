@@ -1,7 +1,7 @@
 ﻿using Ninject;
 using Polling.Domain.Abstract;
 using Polling.Domain.Concrete;
-using Polling.Providers;
+using Polling.WebUI.Providers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace Polling.Infrastructure
+namespace Polling.WebUI.Infrastructure
 {
     public class NinjectControllerFactory : DefaultControllerFactory
     {

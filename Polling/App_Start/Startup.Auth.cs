@@ -3,7 +3,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
 
-namespace Polling
+namespace Polling.WebUI
 {
     public partial class Startup
     {

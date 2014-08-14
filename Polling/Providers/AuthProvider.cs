@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 
-namespace Polling.Providers
+namespace Polling.WebUI.Providers
 {
     public class AuthProvider : IAuthProvider
     {

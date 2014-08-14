@@ -1,12 +1,13 @@
 ﻿using Polling.Domain.Abstract;
 using Polling.Domain.Entities;
+using Polling.WebUI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Polling.Controllers
+namespace Polling.WebUI.Controllers
 {
     public class HomeController : Controller
     {
@@ -19,9 +20,9 @@ namespace Polling.Controllers
 
         public ActionResult Index()
         {
-            List<Poll> polls = repository.Polls.ToList();
+            PollListViewModel viewModel = new PollListViewModel(repository, "lunch", "", 1);
 
-            return View();
+            return View(viewModel);
         }
 
         public ActionResult About()

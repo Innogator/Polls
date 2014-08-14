@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Polling.Models
+namespace Polling.WebUI.Models
 {
     public class ExternalLoginConfirmationViewModel
     {

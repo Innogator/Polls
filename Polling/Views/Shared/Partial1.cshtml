@@ -1,0 +1,16 @@
+﻿@model Polling.Domain.Entities.Poll
+
+<div class="item">
+    <h3>
+        @Html.ActionLink(Model.PollQuestion, "Details", new { pollID = Model.PollID })
+    </h3>
+    <div class="indent">
+        @Model.Description
+    </div>
+    <div class="dateDisplay">
+        <span class="boldLabel">
+            Date Published:
+        </span>
+        @Html.DisplayFor(m => m.PubDate)
+    </div>
+</div>
