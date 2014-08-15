@@ -1,0 +1,20 @@
+﻿@model IEnumerable<Polling.Domain.Entities.Poll>
+
+@{
+    AjaxOptions pollSelect = new AjaxOptions
+    {
+        UpdateTargetId = "poll-details"
+    };
+}
+
+<ul class="nav" id="poll-list">
+    @foreach (var p in Model)
+    {
+        <li>
+            @Ajax.ActionLink(p.PollQuestion, "GetPoll", new { pollId = p.PollID }, pollSelect)
+        </li>
+    }
+</ul>
+
+
+

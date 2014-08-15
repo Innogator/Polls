@@ -1,0 +1,24 @@
+﻿@model Polling.Domain.Entities.Poll
+
+<div>
+    <h1>
+        @Model.PollQuestion
+    </h1>
+    <span>
+        Published: @Html.DisplayFor(m => m.PubDate)
+    </span>
+</div>
+
+<div>
+    <h3>
+    </h3>
+    @Model.Description
+    <h4>
+        @foreach (var opt in Model.Options)
+        {
+            <input type="radio" name="@Model.PollID" value="@opt.OptionID" />
+            @opt.Text
+            <br />
+        }
+    </h4>
+</div>

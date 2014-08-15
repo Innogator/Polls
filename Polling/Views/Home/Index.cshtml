@@ -1,7 +1,12 @@
-﻿@model Polling.WebUI.Models.PollListViewModel
+﻿@model Polling.WebUI.Models.PollHomeViewModel
 
 @{
     ViewBag.Title = "Home Page";
+
+    AjaxOptions categorySelect = new AjaxOptions
+    {
+        UpdateTargetId = "poll-list"
+    };
 }
 
 <div class="page-container">
@@ -22,36 +27,32 @@
 
     <div class="container">
         <div class="row row-offcanvas row-offcanvas-left">
-            <!-- sidebar -->
-            <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+            <!-- categories -->
+            <div class="col-md-2 sidebar-offcanvas" id="sidebar" role="navigation">
+                <h3>
+                    Categories
+                </h3>
                 <ul class="nav">
-                    @foreach (var p in Model.Polls)
+                    @foreach (var cat in Model.Categories)
                     {
                         <li>
-                            <a href="#">
-                                @p.PollQuestion
-                            </a>
+                            @Ajax.ActionLink(cat.Name, "GetCategoryPolls", new { categoryId = cat.CategoryID }, categorySelect)
                         </li>
                     }
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#">Link 1</a></li>
-                    <li><a href="#">Link 2</a></li>
-                    <li><a href="#">Link 3</a></li>
-                    <li>
-                        <a href="#" data-toggle="collapse" data-target="#sub1">Link 4 (submenu)</a>
-                        <ul class="nav collapse" id="sub1">
-                            <li><a href="#">Sub Link 1</a></li>
-                            <li><a href="#">Sub Link 2</a></li>
-                            <li><a href="#">Sub Link 3</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Link 5</a></li>
                 </ul>
             </div>
 
+            <!-- poll questions for selected category -->
+            <div class="col-md-4 sidebar-offcanvas" role="navigation">
+                <h3>
+                    Polls
+                </h3>
+                @Html.Action("GetCategoryPolls")
+            </div>
+
             <!-- main area -->
-            <div class="col-xs-12 col-sm-9">
-                <h1>Shrink Width to Collapse Sidebar</h1>
+            <div class="col-md-6" id="poll-details">
+                <h1>Initial Text or Promotions Here</h1>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus in nisi eu arcu tempus vehicula.
                     Nulla faucibus cursus metus in sagittis. Nunc elit leo, imperdiet in ligula in, euismod varius est.
@@ -72,27 +73,6 @@
                     adipiscing varius. Fusce commodo nulla quis fermentum hendrerit. Donec vulputate, tellus sed
                     venenatis sodales, purus nibh ullamcorper quam, sit amet tristique justo velit molestie lorem.
                 </p>
-
-                <p>
-                    Fusce sollicitudin lacus lacinia mi tincidunt ullamcorper. Aenean velit ipsum, vestibulum nec
-                    tincidunt eu, lobortis vitae erat. Nullam ultricies fringilla ultricies. Sed euismod nibh quis
-                    tincidunt dapibus. Nulla quam velit, porta sit amet felis eu, auctor fringilla elit. Donec
-                    convallis tincidunt nibh, quis pellentesque sapien condimentum a. Phasellus purus dui, rhoncus
-                    id suscipit id, ornare et sem. Duis aliquet posuere arcu a ornare. Pellentesque consequat libero
-                    id massa accumsan volutpat. Fusce a hendrerit lacus. Nam elementum ac eros eu porttitor.
-                    Phasellus enim mi, auctor sit amet luctus a, commodo fermentum arcu. In volutpat scelerisque
-                    quam, nec lacinia libero.
-                </p>
-
-                <p>
-                    Aliquam a lacinia orci, iaculis porttitor neque. Nullam cursus dolor tempus mauris posuere, eu
-                    scelerisque sem tincidunt. Praesent blandit sapien at sem pulvinar, vel egestas orci varius.
-                    Praesent vitae purus at ante aliquet luctus vel quis nibh. Mauris id nulla vitae est lacinia
-                    rhoncus a vel justo. Donec iaculis quis sapien vel molestie. Aliquam sed elementum orci.
-                    Vestibulum tristique tempor risus et malesuada. Sed eget ligula sed quam placerat dapibus.
-                    Integer accumsan ac massa at tempus.
-                </p>
-
             </div><!-- /.col-xs-12 main -->
         </div><!--/.row-->
     </div><!--/.container-->

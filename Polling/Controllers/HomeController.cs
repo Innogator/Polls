@@ -20,23 +20,29 @@ namespace Polling.WebUI.Controllers
 
         public ActionResult Index()
         {
-            PollListViewModel viewModel = new PollListViewModel(repository, "lunch", "", 1);
+            PollHomeViewModel viewModel = new PollHomeViewModel(repository, "lunch", "", 1);
 
             return View(viewModel);
         }
 
-        public ActionResult About()
+        // given a selected category, return a list of
+        // all the questions for the category
+        public PartialViewResult GetCategoryPolls(int categoryId = 0)
         {
-            ViewBag.Message = "Your application description page.";
+            IEnumerable<Poll> polls = repository.Polls
+                .Where(x => x.CategoryID == categoryId)
+                .OrderBy(x => x.PubDate);
 
-            return View();
+            return PartialView("_CategoryPolls", polls);
         }
 
-        public ActionResult Contact()
+        // given a selected poll, return the
+        // details of the poll
+        public PartialViewResult GetPoll(int pollId)
         {
-            ViewBag.Message = "Your contact page.";
+            Poll poll = repository.Poll(pollId);
 
-            return View();
+            return PartialView("_PollDetails", poll);
         }
     }
 }
