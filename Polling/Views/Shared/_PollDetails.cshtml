@@ -14,11 +14,17 @@
     </h3>
     @Model.Description
     <h4>
-        @foreach (var opt in Model.Options)
-        {
-            <input type="radio" name="@Model.PollID" value="@opt.OptionID" />
-            @opt.Text
+        @using (Html.BeginForm("Vote", "Home", FormMethod.Post))
+        { 
+            @Html.HiddenFor(x => x.PollID)           
+            foreach (var opt in Model.Options)
+            {
+                @Html.RadioButton("Option", opt.OptionID)
+                @opt.Text
+                <br />
+            }
             <br />
+            <button type="submit" class="btn btn-primary">Submit</button>
         }
     </h4>
 </div>

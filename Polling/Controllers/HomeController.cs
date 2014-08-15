@@ -25,6 +25,23 @@ namespace Polling.WebUI.Controllers
             return View(viewModel);
         }
 
+        public string Vote(int pollID, int option)
+        {
+            // default userId to 1 for now
+            Vote vote = new Vote()
+            {
+                PollID = pollID,
+                ChoiceID = option,
+                DateVoted = DateTime.Now,
+                UserID = 1
+            };
+            repository.AddVote(vote);
+
+            int count = repository.GetVotes(pollID, option);
+
+            return count.ToString();
+        }
+
         // given a selected category, return a list of
         // all the questions for the category
         public PartialViewResult GetCategoryPolls(int categoryId = 0)

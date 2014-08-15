@@ -23,6 +23,11 @@ namespace Polling.Domain.Concrete
             get { return context.Categories; }
         }
 
+        public IQueryable<Vote> Votes
+        {
+            get { return context.Votes; }
+        }
+
         public Poll Poll(int pollID)
         {
             Poll poll = context
@@ -37,6 +42,20 @@ namespace Polling.Domain.Concrete
         {
             context.Polls.Add(poll);
             context.SaveChanges();
+        }
+
+        public void AddVote(Vote vote)
+        {
+            context.Votes.Add(vote);
+            context.SaveChanges();
+        }
+
+        public int GetVotes(int pollId, int optionId)
+        {
+            return context.Votes
+                        .Where(x => x.PollID == pollId)
+                        .Where(x => x.ChoiceID == optionId)
+                        .Count();
         }
 
         public IDictionary<int, string> AllCategories()

@@ -13,13 +13,16 @@ namespace Polling.Domain.Abstract
         // objects to be obtained
         IQueryable<Poll> Polls { get; }
         IQueryable<Category> Categories { get; }
+        IQueryable<Vote> Votes { get; }
 
         // Get poll details of one poll
         Poll Poll(int pollID);
-
         void AddPoll(Poll poll);
 
         IDictionary<int, string> AllCategories();
+
+        void AddVote(Vote vote);
+        int GetVotes(int pollId, int optionId);
 
         // Get the tags of a specific poll
         IList<Tag> Tags();
