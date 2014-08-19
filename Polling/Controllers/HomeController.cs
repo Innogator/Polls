@@ -61,5 +61,10 @@ namespace Polling.WebUI.Controllers
 
             return PartialView("_PollDetails", poll);
         }
+
+        public PartialViewResult Graph()
+        {
+            return PartialView("_PollResults");
+        }
     }
 }

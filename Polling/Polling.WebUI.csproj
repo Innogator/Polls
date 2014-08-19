@@ -211,6 +211,8 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\exporting.js" />
+    <Content Include="Scripts\highcharts.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -252,6 +254,8 @@
     <Content Include="Views\Shared\Partial1.cshtml" />
     <Content Include="Views\Home\_CategoryPolls.cshtml" />
     <Content Include="Views\Shared\_PollDetails.cshtml" />
+    <Content Include="Views\Shared\_PollResults.cshtml" />
+    <Content Include="Views\Home\Graph.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
