@@ -25,7 +25,7 @@ namespace Polling.WebUI.Controllers
             return View(viewModel);
         }
 
-        public string Vote(int pollID, int option)
+        public PartialViewResult Vote(int pollID, int option)
         {
             // default userId to 1 for now
             Vote vote = new Vote()
@@ -37,9 +37,38 @@ namespace Polling.WebUI.Controllers
             };
             repository.AddVote(vote);
 
-            int count = repository.GetVotes(pollID, option);
+            // get the count of all votes for the poll
+            Dictionary<string, int> voteDict = new Dictionary<string, int>();
+            Poll poll = repository.Poll(pollID);
 
-            return count.ToString();
+            foreach (var opt in poll.Options)
+            {
+                int count = repository.GetVotes(pollID, opt.OptionID);
+                voteDict.Add(opt.Text, count);
+            }
+
+            string[] keys = voteDict.OrderByDescending(x => x.Value).Select(x => x.Key).ToArray();
+            int[] values = voteDict.OrderByDescending(x => x.Value).Select(x => x.Value).ToArray();
+            // now we have the votes for each option
+            DotNet.Highcharts.Highcharts chart = new DotNet.Highcharts.Highcharts("chart")
+            .SetTitle(new DotNet.Highcharts.Options.Title { Text = poll.PollQuestion })
+            .SetXAxis(new DotNet.Highcharts.Options.XAxis
+                {
+                    Categories = keys
+                })
+            .SetSeries(new DotNet.Highcharts.Options.Series
+                {
+                    Type = DotNet.Highcharts.Enums.ChartTypes.Bar,
+                    Name = "Votes",
+                    Data = new DotNet.Highcharts.Helpers.Data(Array.ConvertAll(values, x => (object)x))
+                });
+            //chart.SetTooltip(new DotNet.Highcharts.Options.Tooltip
+            //{
+            //    UseHTML = true,
+            //    HeaderFormat = "<span>Those who voted</span><table>",
+            //    PointFormat = "<tr><td style"
+            //});
+            return PartialView("_PollResults", chart);
         }
 
         // given a selected category, return a list of
@@ -62,9 +91,28 @@ namespace Polling.WebUI.Controllers
             return PartialView("_PollDetails", poll);
         }
 
-        public PartialViewResult Graph()
+        public PartialViewResult PollResults()
         {
-            return PartialView("_PollResults");
+            DotNet.Highcharts.Highcharts chart = new DotNet.Highcharts.Highcharts("chart");
+            chart.SetXAxis(new DotNet.Highcharts.Options.XAxis
+            {
+                Categories = new[] {
+                        "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+                    }
+            });
+            chart.SetSeries(new DotNet.Highcharts.Options.Series
+            {
+                Data = new DotNet.Highcharts.Helpers.Data(new object[] {
+                        29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4
+                    })
+            });
+            //chart.SetTooltip(new DotNet.Highcharts.Options.Tooltip
+            //{
+            //    UseHTML = true,
+            //    HeaderFormat = "<span>Those who voted</span><table>",
+            //    PointFormat = "<tr><td style"
+            //});
+            return PartialView("_PollResults", chart);
         }
     }
 }

@@ -1,5 +1,12 @@
 ﻿@model Polling.Domain.Entities.Poll
 
+@{
+    AjaxOptions voteOptions = new AjaxOptions
+    {
+        UpdateTargetId = "poll-details"
+    };
+}
+
 <div>
     <h1>
         @Model.PollQuestion
@@ -14,7 +21,7 @@
     </h3>
     @Model.Description
     <h4>
-        @using (Html.BeginForm("Vote", "Home", FormMethod.Post))
+        @using (Ajax.BeginForm("Vote", "Home", voteOptions))
         { 
             @Html.HiddenFor(x => x.PollID)           
             foreach (var opt in Model.Options)
