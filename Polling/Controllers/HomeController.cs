@@ -1,5 +1,6 @@
 ﻿using Polling.Domain.Abstract;
 using Polling.Domain.Entities;
+using Polling.WebUI.CustomBinding;
 using Polling.WebUI.Models;
 using System;
 using System.Collections.Generic;
@@ -91,28 +92,51 @@ namespace Polling.WebUI.Controllers
             return PartialView("_PollDetails", poll);
         }
 
-        public PartialViewResult PollResults()
+        public ActionResult CreatePoll()
         {
-            DotNet.Highcharts.Highcharts chart = new DotNet.Highcharts.Highcharts("chart");
-            chart.SetXAxis(new DotNet.Highcharts.Options.XAxis
+            Poll poll = new Poll();
+            IEnumerable<Category> categories = repository.Categories.ToList();
+            PollViewModel viewModel = new PollViewModel()
             {
-                Categories = new[] {
-                        "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-                    }
-            });
-            chart.SetSeries(new DotNet.Highcharts.Options.Series
+                Poll = poll,
+                Categories = new SelectList(categories, "CategoryID", "Name"),
+                Options = new List<Option>() 
+                { 
+                    new Option(),
+                    new Option(),
+                    new Option(),
+                    new Option()
+                }
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult CreatePoll([ModelBinder(typeof(CreatePollBinder))] PollViewModel model)
+        {
+            Poll poll = model.Poll;
+            // add some values not populated from the form
+            poll.PubDate = DateTime.Now;
+
+            int id = repository.AddPoll(poll);
+            
+            List<Option> options = new List<Option>(model.Options.ToList().Count);
+            // relate the options to the poll
+            foreach (Option opt in model.Options)
             {
-                Data = new DotNet.Highcharts.Helpers.Data(new object[] {
-                        29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4
-                    })
-            });
-            //chart.SetTooltip(new DotNet.Highcharts.Options.Tooltip
-            //{
-            //    UseHTML = true,
-            //    HeaderFormat = "<span>Those who voted</span><table>",
-            //    PointFormat = "<tr><td style"
-            //});
-            return PartialView("_PollResults", chart);
+                Option o = opt;
+                o.PollID = id;
+                options.Add(o);
+            }
+            repository.AddOptions(options);
+
+            return RedirectToAction("Index");
+        }
+
+        public PartialViewResult BlankOptionRow()
+        {
+            return PartialView("_OptionEditor", new Option());
         }
     }
 }

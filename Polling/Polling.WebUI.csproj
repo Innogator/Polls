@@ -190,13 +190,16 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="CustomBinding\CreatePollBinder.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HtmlHelpers\HtmlPrefixScopeExtensions.cs" />
     <Compile Include="Infrastructure\NinjectControllerFactory.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\PollHomeViewModel.cs" />
+    <Compile Include="Models\PollViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\AuthProvider.cs" />
     <Compile Include="Providers\IAuthProvider.cs" />
@@ -290,10 +293,12 @@
     <Content Include="Views\Home\_CategoryPolls.cshtml" />
     <Content Include="Views\Shared\_PollDetails.cshtml" />
     <Content Include="Views\Shared\_PollResults.cshtml" />
+    <Content Include="Views\Home\CreatePoll.cshtml" />
+    <Content Include="Views\Admin\CreateCategory.cshtml" />
+    <Content Include="Views\Home\_OptionEditor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

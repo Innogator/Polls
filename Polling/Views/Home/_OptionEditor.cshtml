@@ -1,0 +1,15 @@
+﻿@model Polling.Domain.Entities.Option
+
+<div class="editorRow">
+    @using (Html.BeginCollectionItem("OptionObjects"))
+    {
+        <div class="form-group">
+            @Html.LabelFor(model => model.Text, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Text)
+                @Html.ValidationMessageFor(model => model.Text)
+                <a href="#" class="deleteRow">Delete</a>
+            </div>
+        </div>
+    }
+</div>

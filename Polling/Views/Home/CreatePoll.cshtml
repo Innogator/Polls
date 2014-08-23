@@ -1,0 +1,100 @@
+﻿@model Polling.WebUI.Models.PollViewModel
+
+@{
+    ViewBag.Title = "CreatePoll";
+}
+
+<h2>CreatePoll</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Poll</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Poll.PollQuestion, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Poll.PollQuestion)
+                @Html.ValidationMessageFor(model => model.Poll.PollQuestion)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Poll.Description, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Poll.Description)
+                @Html.ValidationMessageFor(model => model.Poll.Description)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Poll.UrlSlug, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Poll.UrlSlug)
+                @Html.ValidationMessageFor(model => model.Poll.UrlSlug)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Poll.Meta, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Poll.Meta)
+                @Html.ValidationMessageFor(model => model.Poll.Meta)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SelectedCategoryId, "Category", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.SelectedCategoryId, Model.Categories, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SelectedCategoryId)
+            </div>
+        </div>
+
+        <hr />
+        <div id="editorRows">
+            @foreach (var item in Model.Options)
+            {
+                @Html.Partial("_OptionEditor", item);
+            }
+        </div>
+        <div>
+            @Html.ActionLink("Add another...", "BlankOptionRow", null, new { id = "addItem" })
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        $('#addItem').click(function () {
+            $.ajax({
+                url: this.href,
+                cache: false,
+                success: function (html) {
+                    $('#editorRows').append(html);
+                }
+            });
+            return false;
+        });
+
+        $(document).on({
+            click: function () {
+                $(this).parents("div.editorRow:first").remove();
+                return false;
+            }
+        }, 'a.deleteRow');
+    </script>
+}

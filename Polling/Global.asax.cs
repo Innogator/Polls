@@ -1,4 +1,6 @@
-﻿using Polling.WebUI.Infrastructure;
+﻿using Polling.WebUI.CustomBinding;
+using Polling.WebUI.Infrastructure;
+using Polling.WebUI.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -25,6 +27,7 @@ namespace Polling.WebUI
 
             // ninject controller factory
             ControllerBuilder.Current.SetControllerFactory(new NinjectControllerFactory());
+            ModelBinders.Binders.Add(typeof(PollViewModel), new CreatePollBinder());
         }
     }
 }
