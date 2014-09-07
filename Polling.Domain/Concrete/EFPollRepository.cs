@@ -38,15 +38,33 @@ namespace Polling.Domain.Concrete
         }
 
         // Add a poll to the database
-        public void AddPoll(Poll poll)
+        public int AddPoll(Poll poll)
         {
             context.Polls.Add(poll);
+            context.SaveChanges();
+
+            return poll.PollID;
+        }
+
+        public void AddOptions(List<Option> options)
+        {
+            foreach (Option opt in options)
+            {
+                context.Options.Add(opt);
+            }
+
             context.SaveChanges();
         }
 
         public void AddVote(Vote vote)
         {
             context.Votes.Add(vote);
+            context.SaveChanges();
+        }
+
+        public void AddCategory(Category category)
+        {
+            context.Categories.Add(category);
             context.SaveChanges();
         }
 

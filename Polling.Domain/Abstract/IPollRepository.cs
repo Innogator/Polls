@@ -17,7 +17,9 @@ namespace Polling.Domain.Abstract
 
         // Get poll details of one poll
         Poll Poll(int pollID);
-        void AddPoll(Poll poll);
+        int AddPoll(Poll poll);
+        void AddOptions(List<Option> options);
+        void AddCategory(Category category);
 
         IDictionary<int, string> AllCategories();
 

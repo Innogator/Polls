@@ -16,6 +16,7 @@ namespace Polling.Domain.Entities
 
         public int OptionID { get; set; }
 
+        [Display(Name = "Option")]
         [StringLength(50, ErrorMessage = "Option cannot exceed 200 characters")]
         public string Text { get; set; }
 
