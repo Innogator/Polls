@@ -34,7 +34,7 @@ namespace Polling.WebUI.Controllers
                 PollID = pollID,
                 ChoiceID = option,
                 DateVoted = DateTime.Now,
-                UserID = 1
+                UserID = 2
             };
             repository.AddVote(vote);
 
@@ -45,7 +45,7 @@ namespace Polling.WebUI.Controllers
             foreach (var opt in poll.Options)
             {
                 int count = repository.GetVotes(pollID, opt.OptionID);
-                voteDict.Add(opt.Text, count);
+                voteDict.Add(opt.Text.Replace("'", "\\\'"), count);
             }
 
             string[] keys = voteDict.OrderByDescending(x => x.Value).Select(x => x.Key).ToArray();

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Mvc;
+//using System.Web.Mvc;
 
 namespace Polling.Domain.Entities
 {
@@ -18,7 +18,7 @@ namespace Polling.Domain.Entities
             this.Author = new User();
         }
 
-        [HiddenInput(DisplayValue = false)]
+        //[HiddenInput(DisplayValue = false)]
         public int PollID { get; set; }
 
         [StringLength(200, ErrorMessage = "Question cannot exceed 200 characters")]
